@@ -90,6 +90,8 @@ const Note = ({note}: Props) => {
       <NoteHeader mouseDown={mouseDown} id={note.id} headerColor={colors.colorHeader}  />
       <textarea
         ref={inputRef}
+        autoComplete="nope"
+        spellCheck="false"
         onInput={() => autoGrow(inputRef)}
         onFocus={() => setZindex(cardRef)}
         onKeyUp={keyUp}

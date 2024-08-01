@@ -39,7 +39,7 @@ const AddContainer = (props: Props) => {
 
 
   return (
-    <div className='absolute z-[1000] select-none flex flex-col gap-5 w-fit h-fit left-1 top-1/2 transform -translate-y-1/2  bg-gray-600 px-3 py-10 rounded-full'>
+    <div className='absolute z-[1000] select-none flex flex-col gap-5 w-fit h-fit left-1 top-1/2 transform -translate-y-1/2  bg-slate-300 px-3 py-10 rounded-full'>
       <div onClick={createNote} className='cursor-pointer  w-10 h-10 flex items-center justify-center rounded-full bg-purple-600 shadow-lg hover:scale-125 duration-300'>
         <AddIcon />
       </div>

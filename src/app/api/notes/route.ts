@@ -1,4 +1,6 @@
 import { prisma, startServer, stopServer } from "@/utils/db";
+import decodeToken from "@/utils/decodeToken";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export const GET = async (req:Request,res:NextResponse) =>{
@@ -19,7 +21,17 @@ export const POST = async (req:Request,res:NextResponse) =>{
     try {
         startServer();
         const data = await req.json(); 
-        const result = await prisma.note.create({data});
+        const userID = decodeToken(cookies().get("notes_token"));
+        data.user = { connect : {
+            id: userID
+        }}
+
+        console.log("data",data);
+        const result = await prisma.note.create(
+            {
+                data
+            }
+        );
 
         return NextResponse.json({message:"success",data:result},{status:200})
     } catch (error) {

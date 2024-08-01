@@ -3,6 +3,7 @@ import AddContainer from '@/components/AddContainer'
 import Note from '@/components/note'
 import React, { useContext, useRef } from 'react'
 import { noteContext,IContext } from '../context/AppContext'
+import NoData from '@/components/NoData'
 
 type Props = {}
 
@@ -13,25 +14,32 @@ const Page = (props: Props) => {
   const {notes} = useContext(noteContext);
   const {isLoading,isError,error,data} = notes;
 
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
   if (isError) {
     return <div>{error}</div>
   }
  
   return (
+    <>
     <div ref={mainRef} className='w-full h-full relative bg-white'>
+
+    {
+
+      isLoading && <div>Loading...</div> 
+    }
+      
      
      {
-        data?.map(note => <Note key={note.id} note={note}/>)
-     }
+
+      data?.length === 0 ? <NoData/>
+      :
+
+       data?.map(note => <Note key={note.id} note={note}/>)
+      }
+
 
      <AddContainer/>
-
     </div>
+      </>
   )
 }
 

@@ -13,9 +13,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  username String @unique
+  email String @unique
+  password String
+  note Note[]
+}
 model Note {
   id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
   colors String
   note String
   position String
+  user User @relation(fields: [userId],references: [id])
+
+  @@index([userId])
+
 }
