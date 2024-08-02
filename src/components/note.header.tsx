@@ -3,7 +3,7 @@ import Spin from '@/icons/Spin'
 import Trash from '@/icons/Trash'
 import React, { useContext } from 'react'
 import DeleteNote from './DeleteNote'
-import { noteContext } from '@/app/context/AppContext'
+import { noteContext } from '@/context/AppContext'
 
 type Props = {
     mouseDown: (e:any) => void;

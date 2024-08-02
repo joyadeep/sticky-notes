@@ -6,7 +6,12 @@ import { NextResponse } from "next/server";
 export const GET = async (req:Request,res:NextResponse) =>{
     try {
         startServer();
-        const result = await prisma.note.findMany();
+        const userId = decodeToken(cookies().get("notes_token"));
+        const result = await prisma.note.findMany({
+            where:{
+                userId
+            }
+        });
         return NextResponse.json({message:"success",data:result},{status:200})
 
     } catch (error) {

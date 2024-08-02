@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import NoteHeader from "./note.header";
 import { autoGrow, bodyParser, setNewOffset, setZindex } from "@/utils/utils";
 import { updateNote } from "@/services/notes.services";
-import { noteContext } from "@/app/context/AppContext";
+import { ICreateContext, noteContext } from "@/context/AppContext";
 
 type Props = {
   note : {
@@ -16,12 +16,11 @@ type Props = {
 
 const Note = ({note}: Props) => {
   const [position, setPosition] = useState(JSON.parse(note.position));
-  const [isSaving,setIsSaving] = useState(false);
   const inputRef = useRef<any>(null);
   const cardRef = useRef(null);
   const keepupTimer = useRef<any|null>(null);
 
-  const {setSelectedNote,handleUpdate} = useContext(noteContext);
+  const {setSelectedNote,handleUpdate} = useContext<ICreateContext>(noteContext as any);
 
   useEffect(() => {
     autoGrow(inputRef);

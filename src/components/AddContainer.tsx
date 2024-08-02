@@ -1,14 +1,20 @@
-import { noteContext, IContext } from '@/app/context/AppContext'
+import { noteContext, IContext, ICreateContext } from '@/context/AppContext'
 import AddIcon from '@/icons/AddIcon'
 import { addNote } from '@/services/notes.services'
 import React, { useContext } from 'react'
 import colors from "@/assets/colors.json";
+import { INote } from '@/types/note.types';
 
 
 type Props = {}
 
 const AddContainer = (props: Props) => {
-  const { notes,setNotes,selectedNote,handleUpdate} = useContext(noteContext);
+  const context = useContext<ICreateContext|undefined>(noteContext);
+
+  if (!context) {
+    return null;
+  }
+  const { notes,setNotes,selectedNote,handleUpdate} = context
   const createNote = async () => {
     try {
       const newNote = await addNote({ colors: JSON.stringify(colors[0]), note: "", position: JSON.stringify({ x: 0, y: 0 }) })
@@ -22,7 +28,7 @@ const AddContainer = (props: Props) => {
 
   const updateNoteColor = async (color:any)=>{
     try {
-      const currentNoteIndex = notes.data.findIndex(note => note.id === selectedNote)
+      const currentNoteIndex = notes.data.findIndex((note:INote) => note.id === selectedNote)
       
       handleUpdate(selectedNote,"colors",color);
       const updatedNote = {

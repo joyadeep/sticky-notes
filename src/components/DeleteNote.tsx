@@ -1,4 +1,4 @@
-import { IContext, noteContext } from '@/app/context/AppContext';
+import { IContext, ICreateContext, noteContext } from '@/context/AppContext';
 import Trash from '@/icons/Trash'
 import { deleteNote } from '@/services/notes.services'
 import React, { useContext } from 'react'
@@ -9,7 +9,7 @@ type Props = {
 
 const DeleteNote = ({id}: Props) => {
 
-  const {setNotes} = useContext(noteContext);
+  const {setNotes} = useContext<ICreateContext>(noteContext as any);
 
     const handleDelete = async() => {
         try {

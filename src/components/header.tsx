@@ -1,5 +1,5 @@
 "use client"
-import { noteContext } from '@/app/context/AppContext'
+import { ICreateContext, noteContext } from '@/context/AppContext'
 import Logo from '@/icons/logo'
 import Spin from '@/icons/Spin'
 import React, { useContext } from 'react'
@@ -11,14 +11,15 @@ import LogoutIcon from '@/icons/LogoutIcon'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-type Props = {}
 
-const Header = (props: Props) => {
-  const { isSaving,setMe } = useContext(noteContext)
+// TODO : reset context after logout.
+
+const Header = () => {
+  const { isSaving,resetContext } = useContext<ICreateContext>(noteContext as any)
   const handleLogout = async()=>{
     try {
-      await axios.post("/api/users/logout")
-      setMe(undefined);
+      await axios.post("/api/auth/logout")
+      resetContext();
     } catch (error) {
       console.log("error",error)
     }

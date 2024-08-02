@@ -1,5 +1,5 @@
 "use client"
-import { noteContext } from '@/app/context/AppContext'
+import { ICreateContext, noteContext } from '@/context/AppContext'
 import PasswordInput from '@/components/PasswordInput'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -21,7 +21,7 @@ const formSchame = z.object({
 })
 
 const Login = (props: Props) => {
-  const {me,isFetching,setMe} = useContext(noteContext)
+  const {me,isFetching,setMe} = useContext<ICreateContext>(noteContext as any)
   
   const form = useForm<z.infer<typeof formSchame>>({
     resolver:zodResolver(formSchame),
@@ -33,7 +33,7 @@ const Login = (props: Props) => {
 
   const onSubmit = async(data: z.infer<typeof formSchame>) => {
     try {
-      const response = await axios.post('/api/users/login', data)
+      const response = await axios.post('/api/auth/login', data)
       setMe(response.data.data)
     } catch (error) {
       console.log("error",error)

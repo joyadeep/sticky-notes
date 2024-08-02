@@ -1,17 +1,32 @@
 "use client"
 
-import { getNotes, updateNote } from "@/services/notes.services";
+import { updateNote } from "@/services/notes.services";
+import { INote } from "@/types/note.types";
 import axios from "axios";
-import { createContext, useEffect, useState } from "react"
+import { createContext, Dispatch, SetStateAction, useEffect, useState } from "react"
 
-export const noteContext = createContext<any | null>(null);
+export interface ICreateContext {
+  notes: IContext;
+  setNotes:Dispatch<SetStateAction<IContext>>;
+  selectedNote: string;
+  setSelectedNote:Dispatch<SetStateAction<string>>;
+  isSaving:boolean;
+  setIsSaving:Dispatch<SetStateAction<boolean>>;
+  isFetching:boolean;
+  handleUpdate:(id:string,prop:string,value:any)=>void;
+  me:any;
+  setMe:Dispatch<SetStateAction<any>>;
+  resetContext:()=>void;
+}
 
 export interface IContext {
-    isLoading: boolean;
-    data: any[];
-    isError: boolean;
-    error: string;
+  isLoading: boolean;
+  data: INote[];
+  isError: boolean;
+  error: string;
 }
+
+export const noteContext = createContext<ICreateContext | undefined>(undefined);
 
 const NoteProvider = ({ children }: { children: React.ReactNode }) => {
 
@@ -20,10 +35,6 @@ const NoteProvider = ({ children }: { children: React.ReactNode }) => {
     const [isSaving,setIsSaving] = useState(false);
     const [isFetching,setIsFetching] = useState(true); // for me state. can be used single loading for all requests. future implememtation
     const [me,setMe] = useState(undefined);
-
-    useEffect(() => {
-        init();
-    }, []);
 
     useEffect(() => {
       getMe();
@@ -40,20 +51,6 @@ const NoteProvider = ({ children }: { children: React.ReactNode }) => {
         setIsFetching(false);
       }
     }
-
-    const init = () => {
-        setNotes({ isLoading: true, data: [], isError: false, error: "" });
-        getNotes()
-            .then((result) => {
-                setNotes(prevNotes => ({ ...prevNotes, data: result.data }));
-            })
-            .catch((error) => {
-                setNotes(prevNotes => ({ ...prevNotes, isError: true, error: error.response.data.message }));
-            })
-            .finally(() => {
-                setNotes(prevNotes => ({ ...prevNotes, isLoading: false }));
-            });
-    }
     const handleUpdate = async (id:string,key:string,value:any) => {
         try {
           setIsSaving(true);
@@ -67,7 +64,14 @@ const NoteProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
 
-    const contextData = { notes, setNotes,selectedNote,setSelectedNote,isSaving,setIsSaving,handleUpdate,me,setMe,isFetching };
+    const resetContext = ()=>{
+      setNotes({ isLoading: false, data: [], isError: false, error: "" });
+      setSelectedNote("");
+      setMe(undefined);
+    }
+
+
+    const contextData = { notes, setNotes,selectedNote,setSelectedNote,isSaving,setIsSaving,handleUpdate,me,setMe,isFetching,resetContext };
     return <noteContext.Provider value={contextData}>{children}</noteContext.Provider>;
 }
 

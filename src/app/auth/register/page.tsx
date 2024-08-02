@@ -1,5 +1,5 @@
 "use client"
-import { noteContext } from '@/app/context/AppContext'
+import { ICreateContext, noteContext } from '@/context/AppContext'
 import PasswordInput from '@/components/PasswordInput'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -29,7 +29,7 @@ const formSchama = z.object({
 
 const Register = (props: Props) => {
 
-  const {me} = useContext(noteContext);
+  const {me,isFetching} = useContext<ICreateContext>(noteContext as any);
 
   const form = useForm<z.infer<typeof formSchama>>({
     resolver:zodResolver(formSchama),
@@ -44,10 +44,14 @@ const Register = (props: Props) => {
 
   const onSubmit = async(data: z.infer<typeof formSchama>) => {
     try {
-      await axios.post('/api/users/register', data)
+      await axios.post('/api/auth/register', data)
     } catch (error) {
       console.log("error",error)
     }
+  }
+
+  if (isFetching){
+    return <div className='text-blue-500'>FETCHING....</div>
   }
 
   if (me) {
