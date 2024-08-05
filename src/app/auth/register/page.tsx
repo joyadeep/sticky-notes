@@ -9,9 +9,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import Spin from '@/icons/Spin'
+import Loading from '@/components/Loading'
+import { toast } from 'react-toastify'
 
 type Props = {}
 
@@ -42,16 +45,24 @@ const Register = (props: Props) => {
     }
   })
 
+  const [isLoading,setLoading] = useState(false);
+
   const onSubmit = async(data: z.infer<typeof formSchama>) => {
+    setLoading(true);
     try {
-      await axios.post('/api/auth/register', data)
-    } catch (error) {
+      await axios.post('/api/auth/register', data);
+      toast.success('User created successfully');
+      redirect('/auth/login')
+    } catch (error:any) {
       console.log("error",error)
+      toast.error(error?.response?.data?.message);
+    } finally{
+      setLoading(false)
     }
   }
 
   if (isFetching){
-    return <div className='text-blue-500'>FETCHING....</div>
+    return <Loading/>
   }
 
   if (me) {
@@ -142,7 +153,7 @@ const Register = (props: Props) => {
             )}
             />
 
-            <Button type='submit' className='w-full' size={'lg'} variant={"destructive"} >Register</Button>
+            <Button type='submit' className='w-full' size={'lg'} variant={"default"} disabled={isLoading} >{isLoading ? <Spin/> : "Register"}</Button>
 
 
           </form>

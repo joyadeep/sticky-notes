@@ -19,6 +19,7 @@ const Header = () => {
     try {
       await axios.post("/api/auth/logout")
       resetContext();
+      toast.success("logged out successfully")
     } catch (error) {
       console.log("error",error)
     }

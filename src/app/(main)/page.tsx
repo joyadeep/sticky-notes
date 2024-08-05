@@ -6,6 +6,7 @@ import { noteContext,IContext, ICreateContext } from '../../context/AppContext'
 import NoData from '@/components/NoData'
 import { getNotes } from '@/services/notes.services'
 import { INote } from '@/types/note.types'
+import Loading from '@/components/Loading'
 
 type Props = {}
 
@@ -35,7 +36,7 @@ const Page = (props: Props) => {
   }, [])
 
   if(isLoading){
-    return <div className='w-full h-full'>Loading...</div>
+    return <Loading/>
   }
 
   if (isError) {

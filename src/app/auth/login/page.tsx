@@ -9,9 +9,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import Loading from '@/components/Loading'
+import Spin from '@/icons/Spin'
 
 type Props = {}
 
@@ -30,18 +32,22 @@ const Login = (props: Props) => {
       password:""
     }
   })
+  const [isLoading,setLoading] = useState(false);
 
   const onSubmit = async(data: z.infer<typeof formSchame>) => {
+    setLoading(true)
     try {
       const response = await axios.post('/api/auth/login', data)
       setMe(response.data.data)
     } catch (error) {
       console.log("error",error)
+    } finally {
+      setLoading(false)
     }
   }
 
   if (isFetching){
-    return <div className='text-blue-500'>FETCHING....</div>
+    return <Loading/>
   }
 
   if (me) {
@@ -88,7 +94,7 @@ const Login = (props: Props) => {
             )}
             />
 
-            <Button type='submit' size={"lg"} >Login</Button>
+            <Button type='submit' size={"lg"} disabled={isLoading} >{isLoading? <Spin /> : "Login"}</Button>
            
          </form>  
         </Form>
