@@ -12,7 +12,6 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 
 
-// TODO : reset context after logout.
 
 const Header = () => {
   const { isSaving,resetContext } = useContext<ICreateContext>(noteContext as any)
