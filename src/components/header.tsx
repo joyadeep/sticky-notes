@@ -6,15 +6,16 @@ import React, { useContext } from 'react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu'
 import { Avatar, AvatarFallback } from './ui/avatar'
 import SettingIcon from '@/icons/SettingIcon'
-import UserIcon from '@/icons/UserIcon'
 import LogoutIcon from '@/icons/LogoutIcon'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 
 
 const Header = () => {
-  const { isSaving,resetContext } = useContext<ICreateContext>(noteContext as any)
+  const { isSaving,resetContext,me } = useContext<ICreateContext>(noteContext as any)
+  const router= useRouter();
   const handleLogout = async()=>{
     try {
       await axios.post("/api/auth/logout")
@@ -26,11 +27,12 @@ const Header = () => {
   }
 
   const handleClick =()=>{
-    toast.success("saved successfully")
+    router.push("/profile")
   }
 
+
   return (
-    <div className='w-full h-14 px-10 py-5 flex items-center gap-10 bg-white text-black border-b shadow-lg'>
+    <div className='w-full h-14 px-10 py-5 flex items-center gap-10 bg-white text-black border-b '>
       <Logo />
       {
         isSaving &&
@@ -51,20 +53,16 @@ const Header = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent className='w-64 p-2'>
            <div>
-            <div className=''>Joyadeep</div>
-            <div className='text-xs'>@joyadeep</div>
+            <div className=''>{me.name}</div>
+            <div className='text-xs'>@{me.username}</div>
            </div>
            <DropdownMenuSeparator/>
            <DropdownMenuGroup className='flex flex-col gap-1' >
-            <DropdownMenuItem>
-              <UserIcon/>
-              <span className='ml-2'>Profile</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleClick}>
+            <DropdownMenuItem onClick={handleClick} className='cursor-pointer'>
               <SettingIcon/>
               <span className='ml-2'>Settings</span>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem onClick={handleLogout} className='cursor-pointer'>
               <LogoutIcon/>
               <span className='ml-2'>Logout</span>
             </DropdownMenuItem>

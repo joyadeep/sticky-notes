@@ -30,7 +30,7 @@ export const noteContext = createContext<ICreateContext | undefined>(undefined);
 
 const NoteProvider = ({ children }: { children: React.ReactNode }) => {
 
-    const [notes, setNotes] = useState<IContext>({ isLoading: false, data: [], isError: false, error: "" });
+    const [notes, setNotes] = useState<IContext>({ isLoading: true, data: [], isError: false, error: "" });
     const [selectedNote,setSelectedNote] = useState("");
     const [isSaving,setIsSaving] = useState(false);
     const [isFetching,setIsFetching] = useState(true); // for me state. can be used single loading for all requests. future implememtation
