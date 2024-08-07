@@ -6,8 +6,8 @@ import generateAndSaveToken from "@/utils/generate.and.save.token";
 export const POST = async (req:Request,res:NextResponse) =>{
     startServer();
     try {
-        const {name,username,email,password,confirmPassword} = await req.json();
-        if (!name || !username || !email || !password || !confirmPassword) {
+        const {name,username,email,password,confirmPassword,gender,imageUrl} = await req.json();
+        if (!name || !username || !email || !password || !confirmPassword || !gender || !imageUrl) {
             return NextResponse.json({message:"Missing fields"},{status:400});
         }
 
@@ -41,14 +41,15 @@ export const POST = async (req:Request,res:NextResponse) =>{
                 name:name,
                 username:username,
                 email:email,
-                password:hashedPassword
+                password:hashedPassword,
+                gender:gender,
+                imageUrl:imageUrl
             }
         })
 
         generateAndSaveToken({id:result?.id,name:result?.name,username:result?.username,email:result?.email},res);
 
         return NextResponse.json({message:"user created successfully"},{status:201});
-        // TODO: add password hashing and token generation
 
     } catch (error) {
         

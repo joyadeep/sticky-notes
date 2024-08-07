@@ -12,6 +12,7 @@ type Props = {
 const Mainlayout = ({children}: Props) => {
   const {me,isFetching} = useContext<ICreateContext>(noteContext as any);
 
+
   if (isFetching) {
     return <div className='w-full h-screen'>
       <Loading/>

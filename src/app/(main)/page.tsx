@@ -32,8 +32,11 @@ const Page = (props: Props) => {
                 setNotes((prevNotes:IContext) => ({ ...prevNotes, isLoading: false }));
             });
     };
-    init();
-  }, [])
+    if (notes?.data?.length === 0) {
+      
+      init();
+    }
+  }, [notes?.data?.length,setNotes])
 
   if(isLoading){
     return <Loading/>

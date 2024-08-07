@@ -28,6 +28,7 @@ const AddContainer = (props: Props) => {
 
   const updateNoteColor = async (color:any)=>{
     try {
+      if (!selectedNote) return
       const currentNoteIndex = notes.data.findIndex((note:INote) => note.id === selectedNote)
       
       handleUpdate(selectedNote,"colors",color);

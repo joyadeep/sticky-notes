@@ -4,7 +4,7 @@ import Logo from '@/icons/logo'
 import Spin from '@/icons/Spin'
 import React, { useContext } from 'react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu'
-import { Avatar, AvatarFallback } from './ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import SettingIcon from '@/icons/SettingIcon'
 import LogoutIcon from '@/icons/LogoutIcon'
 import axios from 'axios'
@@ -48,12 +48,13 @@ const Header = () => {
         <DropdownMenu>
           <DropdownMenuTrigger>
            <Avatar>
+            <AvatarImage src={me?.imageUrl}/>
             <AvatarFallback>CN</AvatarFallback>
            </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent className='w-64 p-2'>
            <div>
-            <div className=''>{me.name}</div>
+            <div className='text-sm capitalize'>{me.name}</div>
             <div className='text-xs'>@{me.username}</div>
            </div>
            <DropdownMenuSeparator/>
