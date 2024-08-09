@@ -18,7 +18,14 @@ export interface ICreateContext {
   setMe:Dispatch<SetStateAction<any>>;
   resetContext:()=>void;
 }
-
+export interface IMe {
+  id:string;
+  name:string;
+  username:string;
+  email:string;
+  gender: "male"|"female";
+  imageUrl:string;
+}
 export interface IContext {
   isLoading: boolean;
   data: INote[];
@@ -34,7 +41,7 @@ const NoteProvider = ({ children }: { children: React.ReactNode }) => {
     const [selectedNote,setSelectedNote] = useState("");
     const [isSaving,setIsSaving] = useState(false);
     const [isFetching,setIsFetching] = useState(true); // for me state. can be used single loading for all requests. future implememtation
-    const [me,setMe] = useState(undefined);
+    const [me,setMe] = useState<IMe|undefined>(undefined);
 
     useEffect(() => {
       getMe();
