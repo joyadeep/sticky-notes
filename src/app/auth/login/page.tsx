@@ -50,7 +50,7 @@ const Login = () => {
   }
 
   if (me) {
-    redirect("/")
+    redirect("/notes")
   }
 
 

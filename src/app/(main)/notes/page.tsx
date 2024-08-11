@@ -2,7 +2,7 @@
 import AddContainer from '@/components/AddContainer'
 import Note from '@/components/note'
 import React, { useContext, useEffect, useRef } from 'react'
-import { noteContext,IContext, ICreateContext } from '../../context/AppContext'
+import { noteContext,IContext, ICreateContext } from '@/context/AppContext'
 import NoData from '@/components/NoData'
 import { getNotes } from '@/services/notes.services'
 import { INote } from '@/types/note.types'
