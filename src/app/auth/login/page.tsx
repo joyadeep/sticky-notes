@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import React, { useContext, useState } from 'react'
@@ -14,15 +14,14 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Loading from '@/components/Loading'
 import Spin from '@/icons/Spin'
-
-type Props = {}
+import { toast } from 'react-toastify'
 
 const formSchame = z.object({
   input: z.string().min(1, 'Username/Email is required'),
   password: z.string().min(1, 'Password is required')
 })
 
-const Login = (props: Props) => {
+const Login = () => {
   const {me,isFetching,setMe} = useContext<ICreateContext>(noteContext as any)
   
   const form = useForm<z.infer<typeof formSchame>>({
@@ -39,8 +38,8 @@ const Login = (props: Props) => {
     try {
       const response = await axios.post('/api/auth/login', data)
       setMe(response.data.data)
-    } catch (error) {
-      console.log("error",error)
+    } catch (error:AxiosError|any) {
+      toast.error(error?.response?.data?.message)
     } finally {
       setLoading(false)
     }

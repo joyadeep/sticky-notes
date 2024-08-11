@@ -6,18 +6,20 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input'
 import Spin from '@/icons/Spin'
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios from 'axios'
 import { Key } from 'lucide-react'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 
 type Props = {}
 
 const formSchame = z.object({
   currentPassword: z.string().min(1, 'current password is required'),
-  newpassword: z.string().min(1, 'new passowrd is required'),
-  verifynewpassword: z.string().min(1, 'verify password is required')
-}).refine(data => data.newpassword === data.verifynewpassword, {
+  newPassword: z.string().min(1, 'new passowrd is required'),
+  verifyNewPassword: z.string().min(1, 'verify password is required')
+}).refine(data => data.newPassword === data.verifyNewPassword, {
   message: 'Passwords do not match',
   path: ['verifynewpassword'],
 })
@@ -28,10 +30,25 @@ const ChangePassword = (props: Props) => {
     resolver: zodResolver(formSchame),
     defaultValues: {
       currentPassword: "",
-      newpassword: "",
-      verifynewpassword: ""
+      newPassword: "",
+      verifyNewPassword: ""
     }
   })
+
+  const onSubmit = async (data: z.infer<typeof formSchame>) => {
+    setLoading(true);
+    try {
+      await axios.put('/api/users/change-password', data);
+      toast.success("Password changed successfully");
+      form.reset();
+    } catch (error:any) {
+      toast.error(error?.response?.data?.message);
+    }
+    finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className='flex-1 flex flex-col gap-2 items-center'>
       <Card className='w-1/2 shadow-none' >
@@ -43,7 +60,7 @@ const ChangePassword = (props: Props) => {
         </CardHeader>
         <CardContent>
           <Form {...form} >
-            <form className='flex flex-col gap-5' onSubmit={form.handleSubmit(() => { })}>
+            <form className='flex flex-col gap-5' onSubmit={form.handleSubmit(onSubmit)}>
 
               <FormField
                 control={form.control}
@@ -62,7 +79,7 @@ const ChangePassword = (props: Props) => {
               />
               <FormField
                 control={form.control}
-                name='newpassword'
+                name='newPassword'
                 render={({ field }) => (
                   <FormItem>
                     <div className='flex gap-2'>
@@ -77,7 +94,7 @@ const ChangePassword = (props: Props) => {
               />
               <FormField
                 control={form.control}
-                name='verifynewpassword'
+                name='verifyNewPassword'
                 render={({ field }) => (
                   <FormItem>
                     <div className='flex gap-2'>

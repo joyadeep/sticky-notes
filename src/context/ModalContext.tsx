@@ -10,6 +10,7 @@ export interface IModalContext {
     data:any;
     onOpen: (type:ModalType,data?:any) => void;
     onClose: () => void;
+    resetModalContext:()=>void;
 }
 
 export const modalContext = createContext<any|undefined>(undefined);
@@ -34,7 +35,13 @@ const ModalContextProvider = ({ children }: { children: React.ReactNode }) => {
         setType(null);
     }
 
-    const contextData={isOpen,data,onOpen,onClose,type}
+    const resetModalContext=()=>{
+        setOpen(false);
+        setData(undefined);
+        setType(null);
+    }
+
+    const contextData={isOpen,data,onOpen,onClose,type,resetModalContext}
     return <modalContext.Provider value={contextData}>{children}</modalContext.Provider>
 }
 
