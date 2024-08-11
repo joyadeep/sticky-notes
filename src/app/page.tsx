@@ -7,12 +7,18 @@ import React, { useContext } from 'react'
 import {Linkedin,Github,Brain} from "lucide-react"
 import { ICreateContext, noteContext } from '@/context/AppContext'
 import { redirect, } from 'next/navigation'
+import Loading from '@/components/Loading'
 
 type Props = {}
 
 const Landingpage = (props: Props) => {
-    const {me} = useContext<ICreateContext>(noteContext as any)
+    const {me,isFetching} = useContext<ICreateContext>(noteContext as any)
 
+    if (isFetching){
+        return <div className='w-full h-screen flex items-center justify-center'>
+            <Loading/>
+        </div>
+      }
     
     if (me) {
         redirect("/notes")
