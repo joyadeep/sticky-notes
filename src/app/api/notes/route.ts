@@ -30,8 +30,6 @@ export const POST = async (req:Request,res:NextResponse) =>{
         data.user = { connect : {
             id: userID
         }}
-
-        console.log("data",data);
         const result = await prisma.note.create(
             {
                 data
