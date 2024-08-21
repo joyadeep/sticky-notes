@@ -2,6 +2,10 @@
 
 ## Overview
 This web application allows users to create notes. User can drag notes around as per their needs.
+![image](https://github.com/user-attachments/assets/a5d5d980-769e-4523-bfd4-8410019bbe76)
+![image](https://github.com/user-attachments/assets/2fd387f0-34a6-4821-9542-a7d5e479e55b)
+
+
 
 ## Table of Contents
 - [Installation](#installation)
