@@ -51,7 +51,7 @@ const ChangePassword = (props: Props) => {
 
   return (
     <div className='flex-1 flex flex-col gap-2 items-center'>
-      <Card className='w-1/2 shadow-none' >
+      <Card className='w-full md:w-1/2 shadow-none' >
         <CardHeader className=' flex items-center'>
           <div className='p-5 w-fit bg-purple-100 rounded-full'>
             <Key size={32} className='text-purple-800' />

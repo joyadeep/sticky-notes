@@ -30,6 +30,7 @@ const DeleteAccountModal = (props: Props) => {
         await axios.delete("/api/users");
         resetContext();
         resetModalContext();
+        setChecked(false);
         onClose();
       } catch (error:AxiosError|any) {
         toast.error(error?.response?.data?.message)
@@ -52,7 +53,7 @@ const DeleteAccountModal = (props: Props) => {
         I understand the consequences of deleting my account.
       </Label>
     </div>   
-  <DialogFooter className='w-full'>
+  <DialogFooter className='w-full flex flex-col gap-2'>
     <Button variant={'outline'} disabled={!isChecked} onClick={onSubmit} >Delete</Button>
     <Button variant='default' onClick={handleClose}>Cancel</Button>
   </DialogFooter>

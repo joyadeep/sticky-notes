@@ -55,7 +55,7 @@ const Login = () => {
 
 
   return (
-    <Card className='w-1/3'>
+    <Card className='w-full md:w-1/3 shadow-sm'>
       <CardHeader>
         <CardTitle className='text-2xl text-center'>Login</CardTitle>
       </CardHeader>

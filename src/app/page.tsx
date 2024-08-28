@@ -25,7 +25,7 @@ const Landingpage = (props: Props) => {
     }
   return (
     <div className='w-full h-full'>
-        <header className='w-full h-14 border-b flex px-24 items-center justify-between'>
+        <header className='w-full h-14 border-b flex px-5 md:px-24 items-center justify-between'>
             <Logo/>
             <div className='space-x-5'>
                 <Link href={'/auth/register'}><Button variant={"outline"}>Register</Button></Link>
@@ -34,8 +34,8 @@ const Landingpage = (props: Props) => {
         </header>
 
         <section className='flex items-center flex-col justify-center my-10 text-center'>
-       <h1 className='text-7xl font-semibold tracking-tight mb-5 '> Organize Your Thoughts <br /> with Ease.</h1>
-        <p className='px-36  tracking-tight font-light text-black/70'>Keep your thoughts organized and accessible anytime, anywhere. <br /> Our app brings you an intuitive and powerful way to manage your ideas with customizable sticky notes. <br /> Start organizing your world today!</p>
+       <h1 className='text-4xl md:text-7xl font-semibold tracking-tight mb-5 '> Organize Your Thoughts <br /> with Ease.</h1>
+        <p className='px-5 md:px-36  tracking-tight font-light text-black/70'>Keep your thoughts organized and accessible anytime, anywhere. <br /> Our app brings you an intuitive and powerful way to manage your ideas with customizable sticky notes. <br /> Start organizing your world today!</p>
         </section>
 
         <div className='relative w-full h-96 px-24'>
@@ -43,7 +43,7 @@ const Landingpage = (props: Props) => {
 
         </div>
 
-        <footer className='w-full h-max px-24 border-t py-5'>
+        <footer className='w-full h-max px-5 md:px-24 border-t py-5'>
             <Logo/>
 
             <section className='py-10 flex gap-4'>

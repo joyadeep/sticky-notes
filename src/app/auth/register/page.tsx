@@ -87,7 +87,7 @@ const Register = (props: Props) => {
   }
 
   return (
-    <Card className='w-1/3'>
+    <Card className='w-full md:w-1/3 '>
       <CardHeader>
         <CardTitle className='text-2xl text-center'>Register</CardTitle>
       </CardHeader>

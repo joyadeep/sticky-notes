@@ -26,6 +26,7 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.424.0",
     "next": "14.2.5",
+    "next-device-detection": "^1.1.0",
     "prisma": "^5.17.0",
     "react": "^18",
     "react-dom": "^18",
