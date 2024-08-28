@@ -7,6 +7,7 @@ import NoData from '@/components/NoData'
 import { getNotes } from '@/services/notes.services'
 import { INote } from '@/types/note.types'
 import Loading from '@/components/Loading'
+import useDeviceDetector from "next-device-detection";
 
 type Props = {}
 
@@ -17,6 +18,7 @@ const Page = (props: Props) => {
   const mainRef = useRef<HTMLDivElement | null>(null)
   const {notes,setNotes} = useContext<ICreateContext>(noteContext as any);
   const {isLoading,isError,error,data} = notes;
+  const device = useDeviceDetector();
 
   useEffect(() => {
     const init = () => {
@@ -48,8 +50,9 @@ const Page = (props: Props) => {
  
   return (
     <>
-    <div ref={mainRef} className='w-full h-full relative bg-white'>
-     {
+    <div ref={mainRef} className=' w-full h-full relative bg-white'>
+     
+  {
 
       data?.length === 0 ? <NoData/>
       :
@@ -59,6 +62,9 @@ const Page = (props: Props) => {
 
 
      <AddContainer/>
+     {device?.isDesktop===false && <section className='absolute bg-black/60 backdrop-blur-sm  inset-0 z-50 flex items-center justify-center text-white text-center px-5'>
+        Please Switch to Desktop to use sticky notes.
+        </section>}
     </div>
       </>
   )
